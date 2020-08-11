@@ -86,23 +86,22 @@ class Graph:
                 for next_vertex in self.get_neighbors(v):
                     s.push(next_vertex)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        # visited = set()
-        # if starting_vertex not in visited:
-        #     visited.add(starting_vertex)
+        if visited is None:
+            visited = set()
 
-        #     neighbors = self.get_neighbors(starting_vertex)
-        #     for neighbor in neighbors:
-        #             self.dft(neighbor)
+        visited.add(starting_vertex)
+        print(starting_vertex)
 
-        # self.dft(starting_vertex)
-        # NOT WORKING...
+        for v in self.get_neighbors(starting_vertex):
+            if v not in visited:
+                self.dft_recursive(v,visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -111,20 +110,20 @@ class Graph:
         breath-first order.
         """
         q = Queue()
-        visited = set()
-
         q.enqueue([starting_vertex])
 
+        visited = set()
+
         while q.size() > 0:
-            v = q.dequeue()
-            last = v[-1]
+            path = q.dequeue()
+            last = path[-1]
 
             if last not in visited:
                 visited.add(last)
                 neighbors = self.get_neighbors(last)
 
                 for neighbor in neighbors:
-                    next_path = v.copy()
+                    next_path = path.copy()
                     next_path.append(neighbor)
 
                     if neighbor == destination_vertex:
@@ -143,8 +142,8 @@ class Graph:
         s.push([starting_vertex])
 
         while s.size() > 0:
-            v = s.pop()
-            last = v[-1]
+            path = s.pop()
+            last = path[-1]
 
             if last in visited:
                 continue
@@ -153,7 +152,7 @@ class Graph:
                 neighbors = self.get_neighbors(last)
 
                 for neighbor in neighbors:
-                    next_path = v.copy()
+                    next_path = path.copy()
                     next_path.append(neighbor)
 
                     if neighbor == destination_vertex:
