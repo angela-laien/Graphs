@@ -58,3 +58,18 @@ def earliest_ancestor(ancestors, starting_node):
         if len(path) > len(longest):
             longest = path
     return (longest[-1])
+
+# from graph import Graph
+
+# def earliest_ancestor(ancestors, starting_node):
+#     graph = Graph()
+#     for i in ancestors:
+#         graph.add_vertex(i[0])
+#         graph.add_vertex(i[1])
+#     for i in ancestors:
+#         graph.add_edge(i[1], i[0])
+#     answer = graph.bfs(starting_node)
+#     if answer == starting_node:
+#         return -1
+#     else:
+#         return answer
